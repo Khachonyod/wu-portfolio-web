@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Send, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
 import { sendContactMessage } from '../lib/api';
+import { useScrollReveal } from '@/hooks/useScrollReveal';
 
 export default function ContactForm() {
     const [formData, setFormData] = useState({
@@ -30,8 +31,10 @@ export default function ContactForm() {
         }
     };
 
+    const ref = useScrollReveal();
+
     return (
-        <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8 border-t border-white/5 relative">
+        <section ref={ref} id="contact" className="reveal py-20 px-4 sm:px-6 lg:px-8 border-t border-white/5 relative">
             {/* Background Glow */}
             <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-purple-600/10 blur-[130px] rounded-full pointer-events-none" />
 

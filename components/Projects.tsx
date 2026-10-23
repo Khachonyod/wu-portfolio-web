@@ -1,5 +1,8 @@
+'use client';
+
 import { Project } from '../types';
 import { ExternalLink, FolderGit2 } from 'lucide-react';
+import { useScrollReveal } from '../hooks/useScrollReveal';
 
 // SVG สำหรับ GitHub Icon
 function GithubIcon({ className = 'w-5 h-5' }: { className?: string }) {
@@ -15,8 +18,11 @@ interface ProjectsProps {
 }
 
 export default function Projects({ projects }: ProjectsProps) {
+
+    const ref = useScrollReveal();
+
     return (
-        <section id="projects" className="py-20 px-4 sm:px-6 lg:px-8 border-t border-white/5">
+        <section ref={ref} id="projects" className="reveal py-20 px-4 sm:px-6 lg:px-8 border-t border-white/5">
             <div className="max-w-6xl mx-auto">
                 {/* Section Header */}
                 <div className="text-center mb-16">

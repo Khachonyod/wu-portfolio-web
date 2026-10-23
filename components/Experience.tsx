@@ -1,5 +1,8 @@
+'use client';
+
 import { Experience as ExperienceType } from '../types';
 import { Briefcase, Calendar } from 'lucide-react';
+import { useScrollReveal } from '../hooks/useScrollReveal';
 
 interface ExperienceProps {
     experiences: ExperienceType[];
@@ -12,8 +15,10 @@ export default function Experience({ experiences }: ExperienceProps) {
         return date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
     };
 
+    const ref = useScrollReveal();
+
     return (
-        <section id="experience" className="py-20 px-4 sm:px-6 lg:px-8 border-t border-white/5">
+        <section ref={ref} id="experience" className="reveal py-20 px-4 sm:px-6 lg:px-8 border-t border-white/5">
             <div className="max-w-4xl mx-auto">
                 {/* Section Header */}
                 <div className="text-center mb-16">
