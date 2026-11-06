@@ -108,11 +108,13 @@ export default function TLPRDemoPage() {
     const [result, setResult] = useState<DemoResult | null>(SAMPLE_PRESETS.sample1.result);
     const [activeSample, setActiveSample] = useState<string>('sample1');
     const [activeTab, setActiveTab] = useState<'annotated' | 'original'>('annotated');
+    const [apiError, setApiError] = useState<string | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     const handleSelectSample = (key: string) => {
         setActiveSample(key);
         setImageFile(null);
+        setApiError(null);
         setSelectedImage(SAMPLE_PRESETS[key].url);
         setResult(SAMPLE_PRESETS[key].result);
     };
@@ -122,6 +124,7 @@ export default function TLPRDemoPage() {
         if (file) {
             setImageFile(file);
             setActiveSample('custom');
+            setApiError(null);
             const previewUrl = URL.createObjectURL(file);
             setSelectedImage(previewUrl);
             setResult(null); // Clear previous result until user clicks Run
@@ -134,6 +137,7 @@ export default function TLPRDemoPage() {
         if (file && file.type.startsWith('image/')) {
             setImageFile(file);
             setActiveSample('custom');
+            setApiError(null);
             const previewUrl = URL.createObjectURL(file);
             setSelectedImage(previewUrl);
             setResult(null);
@@ -144,11 +148,16 @@ export default function TLPRDemoPage() {
         if (!selectedImage && !imageFile) return;
 
         setIsLoading(true);
+        setApiError(null);
 
-        const apiUrl = process.env.NEXT_PUBLIC_TLPR_API_URL || 'https://api-tlpr.render.com';
+        const apiUrl = process.env.NEXT_PUBLIC_TLPR_API_URL;
 
         try {
             if (imageFile) {
+                if (!apiUrl) {
+                    throw new Error('NEXT_PUBLIC_TLPR_API_URL_NOT_CONFIGURED');
+                }
+
                 const formData = new FormData();
                 formData.append('file', imageFile);
 
@@ -157,51 +166,25 @@ export default function TLPRDemoPage() {
                     body: formData,
                 });
 
-                if (response.ok) {
-                    const data: DemoResult = await response.json();
-                    setResult(data);
-                } else {
-                    // Fallback simulated result if API is unreachable
-                    setResult({
-                        success: true,
-                        processing_time_ms: 180,
-                        total_plates: 1,
-                        annotated_image: selectedImage || undefined,
-                        plates: [
-                            {
-                                plate_id: 1,
-                                plate_text: '1กข 9999',
-                                province: 'กรุงเทพมหานคร (Demo Mode)',
-                                confidence: 0.95,
-                                tilt_angle: 0.5,
-                                characters: ['1', 'ก', 'ข', '9', '9', '9', '9'],
-                            },
-                        ],
-                    });
+                if (!response.ok) {
+                    throw new Error(`API returned status ${response.status}`);
                 }
+
+                const data: DemoResult = await response.json();
+                setResult(data);
             } else if (activeSample && SAMPLE_PRESETS[activeSample]) {
                 // If it's a preset sample, simulate inference delay for realism
-                await new Promise((r) => setTimeout(r, 700));
+                await new Promise((r) => setTimeout(r, 600));
                 setResult(SAMPLE_PRESETS[activeSample].result);
             }
-        } catch {
-            // Graceful fallback
-            setResult({
-                success: true,
-                processing_time_ms: 165,
-                total_plates: 1,
-                annotated_image: selectedImage || undefined,
-                plates: [
-                    {
-                        plate_id: 1,
-                        plate_text: '2กง 8888',
-                        province: 'กรุงเทพมหานคร',
-                        confidence: 0.948,
-                        tilt_angle: 1.1,
-                        characters: ['2', 'ก', 'ง', '8', '8', '8', '8'],
-                    },
-                ],
-            });
+        } catch (err: unknown) {
+            const errorMessage = err instanceof Error ? err.message : String(err);
+            if (errorMessage === 'NEXT_PUBLIC_TLPR_API_URL_NOT_CONFIGURED') {
+                setApiError('ยังไม่ได้ระบุ NEXT_PUBLIC_TLPR_API_URL บน Vercel เพื่อเชื่อมต่อกับเซิร์ฟเวอร์ TLPR บน Render (สามารถกดทดสอบด้วยภาพตัวอย่าง 1-3 ด้านล่างได้)');
+            } else {
+                setApiError(`ไม่สามารถติดต่อ AI Server (${apiUrl || 'Render'}) ได้ในขณะนี้ เซิร์ฟเวอร์อาจกำลังบูตหรือยังไม่ได้เปิด (Render Free tier อาจใช้เวลาตื่นประมาณ 1 นาที)`);
+            }
+            setResult(null);
         } finally {
             setIsLoading(false);
         }
@@ -414,6 +397,19 @@ export default function TLPRDemoPage() {
                                 )}
                             </div>
                         </div>
+
+                        {/* API Error Notification */}
+                        {apiError && (
+                            <div className="p-5 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-amber-200">
+                                <div className="flex items-start gap-3">
+                                    <AlertCircle className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
+                                    <div className="space-y-1">
+                                        <h4 className="font-semibold text-sm text-white">แจ้งเตือนสถานะการเชื่อมต่อ AI Service</h4>
+                                        <p className="text-xs text-amber-200/90 leading-relaxed">{apiError}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
 
                         {/* Recognition Card (Real Plate Look) */}
                         {result && result.plates && result.plates.length > 0 ? (

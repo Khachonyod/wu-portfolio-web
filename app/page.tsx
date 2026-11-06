@@ -8,6 +8,9 @@ import Footer from '../components/Footer';
 
 import { getProfile, getSkills, getProjects, getExperiences } from '../lib/api';
 
+// บังคับให้หน้าเว็บดึงข้อมูลแบบ Dynamic Server-Side (SSR) เสมอ เพื่อไม่ให้ติด Dynamic Server Usage Error ตอน Build
+export const dynamic = 'force-dynamic';
+
 export default async function HomePage() {
   // ดึงข้อมูลทั้งหมดจาก NestJS API พร้อมๆ กัน (Parallel Fetching)
   const [profile, skills, projects, experiences] = await Promise.all([
