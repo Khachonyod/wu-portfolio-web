@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { Project } from '../types';
 import { ExternalLink, FolderGit2 } from 'lucide-react';
 import { useScrollReveal } from '../hooks/useScrollReveal';
@@ -91,15 +92,25 @@ export default function Projects({ projects }: ProjectsProps) {
                                         </a>
                                     )}
                                     {project.liveUrl && (
-                                        <a
-                                            href={project.liveUrl}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="inline-flex items-center gap-1.5 text-sm text-indigo-400 hover:text-indigo-300 font-medium transition-colors ml-auto"
-                                        >
-                                            <span>Live Demo</span>
-                                            <ExternalLink className="w-4 h-4" />
-                                        </a>
+                                        project.liveUrl.startsWith('/') ? (
+                                            <Link
+                                                href={project.liveUrl}
+                                                className="inline-flex items-center gap-1.5 text-sm text-indigo-400 hover:text-indigo-300 font-medium transition-colors ml-auto"
+                                            >
+                                                <span>Live Demo</span>
+                                                <ExternalLink className="w-4 h-4" />
+                                            </Link>
+                                        ) : (
+                                            <a
+                                                href={project.liveUrl}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="inline-flex items-center gap-1.5 text-sm text-indigo-400 hover:text-indigo-300 font-medium transition-colors ml-auto"
+                                            >
+                                                <span>Live Demo</span>
+                                                <ExternalLink className="w-4 h-4" />
+                                            </a>
+                                        )
                                     )}
                                 </div>
                             </div>
