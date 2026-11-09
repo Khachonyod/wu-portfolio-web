@@ -51,9 +51,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${prompt.variable} scroll-smooth scroll-pt-20 antialiased`}
+      className={`${geistSans.variable} ${prompt.variable} scroll-smooth scroll-pt-20 antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className={`${prompt.className} min-h-full flex flex-col`}>{children}</body>
     </html>
   );
 }
