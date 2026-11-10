@@ -61,6 +61,7 @@ export default function Hero({ profile }: HeroProps) {
                     {profile?.resumeUrl && (
                         <a
                             href={profile.resumeUrl}
+                            download="Khachonyod_Resume.pdf"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/5 hover:bg-white/10 border border-white/15 text-white font-medium backdrop-blur-sm transition-all hover:scale-105 active:scale-95"
