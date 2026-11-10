@@ -37,93 +37,19 @@ interface DemoResult {
     message?: string;
 }
 
-// Pre-computed fallback results for sample images to ensure 100% uptime for recruiters
-const SAMPLE_PRESETS: Record<string, { name: string; url: string; result: DemoResult }> = {
-    sample1: {
-        name: 'ตัวอย่างที่ 1 (รถยนต์มุมตรง)',
-        url: '/samples/test.jpg',
-        result: {
-            success: true,
-            processing_time_ms: 142,
-            total_plates: 1,
-            annotated_image: '/samples/test.jpg',
-            plates: [
-                {
-                    plate_id: 1,
-                    plate_text: '3ขษ 5892',
-                    province: 'กรุงเทพมหานคร',
-                    confidence: 0.965,
-                    tilt_angle: -1.4,
-                    characters: ['3', 'ข', 'ษ', '5', '8', '9', '2'],
-                },
-            ],
-        },
-    },
-    sample2: {
-        name: 'ตัวอย่างที่ 2 (มุมเอียง Perspective)',
-        url: '/samples/test1.jpg',
-        result: {
-            success: true,
-            processing_time_ms: 168,
-            total_plates: 1,
-            annotated_image: '/samples/test1.jpg',
-            plates: [
-                {
-                    plate_id: 1,
-                    plate_text: 'กง 7120',
-                    province: 'เชียงใหม่',
-                    confidence: 0.942,
-                    tilt_angle: 4.8,
-                    characters: ['ก', 'ง', '7', '1', '2', '0'],
-                },
-            ],
-        },
-    },
-    sample3: {
-        name: 'ตัวอย่างที่ 3 (รถกระบะ)',
-        url: '/samples/test2.jpg',
-        result: {
-            success: true,
-            processing_time_ms: 155,
-            total_plates: 1,
-            annotated_image: '/samples/test2.jpg',
-            plates: [
-                {
-                    plate_id: 1,
-                    plate_text: '2ฒฮ 4419',
-                    province: 'กรุงเทพมหานคร',
-                    confidence: 0.958,
-                    tilt_angle: 0.8,
-                    characters: ['2', 'ฒ', 'ฮ', '4', '4', '1', '9'],
-                },
-            ],
-        },
-    },
-};
-
 export default function TLPRDemoPage() {
-    const [selectedImage, setSelectedImage] = useState<string | null>(SAMPLE_PRESETS.sample1.url);
+    const [selectedImage, setSelectedImage] = useState<string | null>(null);
     const [imageFile, setImageFile] = useState<File | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [result, setResult] = useState<DemoResult | null>(SAMPLE_PRESETS.sample1.result);
-    const [activeSample, setActiveSample] = useState<string>('sample1');
+    const [result, setResult] = useState<DemoResult | null>(null);
     const [activeTab, setActiveTab] = useState<'annotated' | 'original'>('annotated');
     const [apiError, setApiError] = useState<string | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
-
-    const handleSelectSample = (key: string) => {
-        setActiveSample(key);
-        setImageFile(null);
-        setApiError(null);
-        setSelectedImage(SAMPLE_PRESETS[key].url);
-        setResult(SAMPLE_PRESETS[key].result);
-    };
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (file) {
             setImageFile(file);
-            setActiveSample('custom');
             setApiError(null);
             const previewUrl = URL.createObjectURL(file);
             setSelectedImage(previewUrl);
@@ -136,7 +62,6 @@ export default function TLPRDemoPage() {
         const file = e.dataTransfer.files?.[0];
         if (file && file.type.startsWith('image/')) {
             setImageFile(file);
-            setActiveSample('custom');
             setApiError(null);
             const previewUrl = URL.createObjectURL(file);
             setSelectedImage(previewUrl);
@@ -145,7 +70,7 @@ export default function TLPRDemoPage() {
     };
 
     const runRecognition = async () => {
-        if (!selectedImage && !imageFile) return;
+        if (!imageFile) return;
 
         setIsLoading(true);
         setApiError(null);
@@ -153,36 +78,30 @@ export default function TLPRDemoPage() {
         const apiUrl = process.env.NEXT_PUBLIC_TLPR_API_URL;
 
         try {
-            if (imageFile) {
-                if (!apiUrl) {
-                    throw new Error('NEXT_PUBLIC_TLPR_API_URL_NOT_CONFIGURED');
-                }
-
-                const formData = new FormData();
-                formData.append('file', imageFile);
-
-                const response = await fetch(`${apiUrl}/predict`, {
-                    method: 'POST',
-                    body: formData,
-                });
-
-                if (!response.ok) {
-                    throw new Error(`API returned status ${response.status}`);
-                }
-
-                const data: DemoResult = await response.json();
-                setResult(data);
-            } else if (activeSample && SAMPLE_PRESETS[activeSample]) {
-                // If it's a preset sample, simulate inference delay for realism
-                await new Promise((r) => setTimeout(r, 600));
-                setResult(SAMPLE_PRESETS[activeSample].result);
+            if (!apiUrl) {
+                throw new Error('NEXT_PUBLIC_TLPR_API_URL_NOT_CONFIGURED');
             }
+
+            const formData = new FormData();
+            formData.append('file', imageFile);
+
+            const response = await fetch(`${apiUrl}/predict`, {
+                method: 'POST',
+                body: formData,
+            });
+
+            if (!response.ok) {
+                throw new Error(`API returned status ${response.status}`);
+            }
+
+            const data: DemoResult = await response.json();
+            setResult(data);
         } catch (err: unknown) {
             const errorMessage = err instanceof Error ? err.message : String(err);
             if (errorMessage === 'NEXT_PUBLIC_TLPR_API_URL_NOT_CONFIGURED') {
-                setApiError('ยังไม่ได้ระบุ NEXT_PUBLIC_TLPR_API_URL บน Vercel เพื่อเชื่อมต่อกับเซิร์ฟเวอร์ TLPR บน Render (สามารถกดทดสอบด้วยภาพตัวอย่าง 1-3 ด้านล่างได้)');
+                setApiError('ยังไม่ได้ระบุ NEXT_PUBLIC_TLPR_API_URL เพื่อเชื่อมต่อกับเซิร์ฟเวอร์ TLPR AI');
             } else {
-                setApiError(`ไม่สามารถติดต่อ AI Server (${apiUrl || 'Render'}) ได้ในขณะนี้ เซิร์ฟเวอร์อาจกำลังบูตหรือยังไม่ได้เปิด (Render Free tier อาจใช้เวลาตื่นประมาณ 1 นาที)`);
+                setApiError(`ไม่สามารถติดต่อ AI Server (${apiUrl || 'Render'}) ได้ในขณะนี้ เซิร์ฟเวอร์อาจกำลังบูตหรือยังไม่ได้เปิด`);
             }
             setResult(null);
         } finally {
@@ -200,14 +119,10 @@ export default function TLPRDemoPage() {
                         className="inline-flex items-center gap-2 text-sm font-medium text-gray-400 hover:text-white transition-colors"
                     >
                         <ArrowLeft className="w-4 h-4" />
-                        <span>กลับสู่ Portfolio</span>
+                        <span>Return</span>
                     </Link>
 
                     <div className="flex items-center gap-3">
-                        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
-                            <Sparkles className="w-3.5 h-3.5" />
-                            AI Vision Showcase
-                        </span>
                         <a
                             href="https://github.com/Khachonyod/Thai-license-plate-Recognition"
                             target="_blank"
@@ -240,41 +155,18 @@ export default function TLPRDemoPage() {
                         <div className="p-6 rounded-2xl bg-white/[0.03] border border-white/10 space-y-5">
                             <h2 className="text-lg font-bold text-white flex items-center gap-2">
                                 <Car className="w-5 h-5 text-indigo-400" />
-                                <span>เลือกภาพสำหรับทดสอบ</span>
+                                <span>Upload your image</span>
                             </h2>
-
-                            {/* Preset Buttons */}
-                            <div>
-                                <label className="text-xs font-medium text-gray-400 block mb-2.5">
-                                    ตัวอย่างภาพที่บันทึกไว้ (คลิกเพื่อทดสอบทันที):
-                                </label>
-                                <div className="grid grid-cols-3 gap-2">
-                                    {Object.entries(SAMPLE_PRESETS).map(([key, item], idx) => (
-                                        <button
-                                            key={key}
-                                            onClick={() => handleSelectSample(key)}
-                                            className={`p-2.5 rounded-xl text-xs font-medium border text-center transition-all ${
-                                                activeSample === key
-                                                    ? 'bg-indigo-600/20 border-indigo-500 text-indigo-300 shadow-md'
-                                                    : 'bg-white/5 border-white/10 text-gray-400 hover:border-white/20 hover:text-white'
-                                            }`}
-                                        >
-                                            ตัวอย่าง {idx + 1}
-                                        </button>
-                                    ))}
-                                </div>
-                            </div>
 
                             {/* Dropzone */}
                             <div
                                 onDragOver={(e) => e.preventDefault()}
                                 onDrop={handleDrop}
                                 onClick={() => fileInputRef.current?.click()}
-                                className={`border-2 border-dashed rounded-xl p-6 text-center cursor-pointer transition-all ${
-                                    activeSample === 'custom'
-                                        ? 'border-indigo-500/80 bg-indigo-500/5'
-                                        : 'border-white/15 hover:border-indigo-500/50 bg-black/20'
-                                }`}
+                                className={`border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition-all ${selectedImage
+                                    ? 'border-indigo-500/80 bg-indigo-500/5'
+                                    : 'border-white/15 hover:border-indigo-500/50 bg-black/20'
+                                    }`}
                             >
                                 <input
                                     ref={fileInputRef}
@@ -287,9 +179,9 @@ export default function TLPRDemoPage() {
                                     <Upload className="w-6 h-6" />
                                 </div>
                                 <p className="text-sm font-medium text-white mb-1">
-                                    คลิก หรือ ลากไฟล์รูปภาพมาวางที่นี่
+                                    Click or Drag and Drop here
                                 </p>
-                                <p className="text-xs text-gray-400">รองรับไฟล์ JPG, PNG, WEBP (สูงสุด 10MB)</p>
+                                <p className="text-xs text-gray-400">Support JPG, PNG, WEBP</p>
                             </div>
 
                             {/* Run Action Button */}
@@ -301,12 +193,12 @@ export default function TLPRDemoPage() {
                                 {isLoading ? (
                                     <>
                                         <RotateCw className="w-4 h-4 animate-spin" />
-                                        <span>กำลังประมวลผลโมเดล AI...</span>
+                                        <span>Processing...</span>
                                     </>
                                 ) : (
                                     <>
                                         <Scan className="w-4 h-4" />
-                                        <span>วิเคราะห์ป้ายทะเบียน (Run AI)</span>
+                                        <span>Run Process</span>
                                     </>
                                 )}
                             </button>
@@ -350,21 +242,19 @@ export default function TLPRDemoPage() {
                                 <div className="flex items-center gap-1.5 p-1 rounded-lg bg-black/40 border border-white/5 text-xs">
                                     <button
                                         onClick={() => setActiveTab('annotated')}
-                                        className={`px-3 py-1 rounded-md transition-colors ${
-                                            activeTab === 'annotated'
-                                                ? 'bg-indigo-600 text-white font-medium'
-                                                : 'text-gray-400 hover:text-white'
-                                        }`}
+                                        className={`px-3 py-1 rounded-md transition-colors ${activeTab === 'annotated'
+                                            ? 'bg-indigo-600 text-white font-medium'
+                                            : 'text-gray-400 hover:text-white'
+                                            }`}
                                     >
                                         Annotated Box
                                     </button>
                                     <button
                                         onClick={() => setActiveTab('original')}
-                                        className={`px-3 py-1 rounded-md transition-colors ${
-                                            activeTab === 'original'
-                                                ? 'bg-indigo-600 text-white font-medium'
-                                                : 'text-gray-400 hover:text-white'
-                                        }`}
+                                        className={`px-3 py-1 rounded-md transition-colors ${activeTab === 'original'
+                                            ? 'bg-indigo-600 text-white font-medium'
+                                            : 'text-gray-400 hover:text-white'
+                                            }`}
                                     >
                                         Original
                                     </button>
@@ -385,7 +275,7 @@ export default function TLPRDemoPage() {
                                 ) : (
                                     <div className="text-center text-gray-500">
                                         <Car className="w-12 h-12 mx-auto mb-2 opacity-40" />
-                                        <p className="text-sm">ไม่มีรูปภาพแสดง กรุณาเลือกตัวอย่างหรืออัปโหลดภาพ</p>
+                                        <p className="text-sm">ไม่มีรูปภาพแสดง กรุณาอัปโหลดภาพป้ายทะเบียน</p>
                                     </div>
                                 )}
 
@@ -493,7 +383,7 @@ export default function TLPRDemoPage() {
                             <div className="p-8 rounded-2xl bg-white/[0.02] border border-white/5 text-center">
                                 <AlertCircle className="w-8 h-8 text-gray-500 mx-auto mb-2" />
                                 <p className="text-sm font-medium text-gray-400">
-                                    กดปุ่ม &quot;วิเคราะห์ป้ายทะเบียน (Run AI)&quot; เพื่อเริ่มการตรวจจับ
+                                    กดปุ่ม &quot;วิเคราะห์ป้ายทะเบียน&quot; เพื่อเริ่มการตรวจจับ
                                 </p>
                             </div>
                         )}
