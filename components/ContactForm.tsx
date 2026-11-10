@@ -139,12 +139,12 @@ export default function ContactForm() {
                             {status === 'loading' ? (
                                 <>
                                     <Loader2 className="w-5 h-5 animate-spin" />
-                                    <span>กำลังส่งข้อความ...</span>
+                                    <span>Sending...</span>
                                 </>
                             ) : (
                                 <>
                                     <Send className="w-4 h-4" />
-                                    <span>ส่งข้อความ</span>
+                                    <span>Send</span>
                                 </>
                             )}
                         </button>
