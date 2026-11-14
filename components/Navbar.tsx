@@ -19,8 +19,8 @@ export default function Navbar() {
             <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-16">
                     {/* Logo */}
-                    <Link href="/" className="flex items-center gap-2 text-white font-bold text-lg hover:text-indigo-400 transition-colors">
-                        <Code2 className="w-6 h-6 text-indigo-500" />
+                    <Link href="/" className="flex items-center gap-2 text-white font-bold text-lg hover:text-[#F15A59] transition-colors">
+                        <Code2 className="w-6 h-6 text-[#ED2B2A]" />
                         <span>Khachonyod</span>
                     </Link>
 
@@ -37,9 +37,9 @@ export default function Navbar() {
                         ))}
                         <a
                             href="#contact"
-                            className="px-4 py-2 text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-500 rounded-full transition-colors"
+                            className="px-4 py-2 text-sm font-medium text-white bg-[#D21312] hover:bg-[#F15A59] rounded-full transition-colors"
                         >
-                            Contact me
+                            Contact
                         </a>
                     </div>
 
@@ -72,9 +72,9 @@ export default function Navbar() {
                     <a
                         href="#contact"
                         onClick={() => setIsOpen(false)}
-                        className="block text-center py-2.5 text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-500 rounded-lg"
+                        className="block text-center py-2.5 text-sm font-medium text-white bg-[#D21312] hover:bg-[#F15A59] rounded-lg"
                     >
-                        Contact me
+                        Contact
                     </a>
                 </div>
             )}

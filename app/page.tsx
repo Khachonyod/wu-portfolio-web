@@ -21,7 +21,7 @@ export default async function HomePage() {
   ]);
 
   return (
-    <div className="min-h-screen bg-[#0a0a0f] text-gray-100 flex flex-col selection:bg-indigo-500 selection:text-white">
+    <div className="min-h-screen bg-[#0a0a0f] text-gray-100 flex flex-col selection:bg-[#F15A59] selection:text-white">
       {/* 1. แถบเมนูด้านบน */}
       <Navbar />
 
