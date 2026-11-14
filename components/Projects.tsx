@@ -37,7 +37,7 @@ export default function Projects({ projects }: ProjectsProps) {
                     {projects.map((project) => (
                         <div
                             key={project.id}
-                            className="group rounded-2xl bg-white/[0.03] border border-white/10 hover:border-indigo-500/40 overflow-hidden transition-all duration-300 hover:-translate-y-1.5 flex flex-col"
+                            className="group rounded-2xl bg-white/[0.03] border border-white/10 hover:border-[#c48080] overflow-hidden transition-all duration-300 hover:-translate-y-1.5 flex flex-col"
                         >
                             {/* Cover Image */}
                             {project.coverImage && (
@@ -48,7 +48,7 @@ export default function Projects({ projects }: ProjectsProps) {
                                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                                     />
                                     {project.featured && (
-                                        <span className="absolute top-3 right-3 px-3 py-1 rounded-full bg-indigo-600/90 backdrop-blur-md text-xs font-semibold text-white shadow-lg">
+                                        <span className="absolute top-3 right-3 px-3 py-1 rounded-full bg-[#F15A59] backdrop-blur-md text-xs font-semibold text-white shadow-lg">
                                             Featured
                                         </span>
                                     )}
@@ -58,7 +58,7 @@ export default function Projects({ projects }: ProjectsProps) {
                             {/* Content */}
                             <div className="p-6 sm:p-8 flex-1 flex flex-col justify-between">
                                 <div>
-                                    <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-indigo-400 transition-colors">
+                                    <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-[#ED2B2A] transition-colors">
                                         {project.title}
                                     </h3>
                                     <p className="text-gray-400 text-sm leading-relaxed mb-6">
@@ -70,7 +70,7 @@ export default function Projects({ projects }: ProjectsProps) {
                                         {project.tags.map((tag) => (
                                             <span
                                                 key={tag}
-                                                className="px-2.5 py-1 rounded-md bg-white/5 text-xs text-indigo-300 font-medium"
+                                                className="px-2.5 py-1 rounded-md bg-white/5 text-xs text-[#F15A59] font-medium"
                                             >
                                                 {tag}
                                             </span>
@@ -95,7 +95,7 @@ export default function Projects({ projects }: ProjectsProps) {
                                         project.liveUrl.startsWith('/') ? (
                                             <Link
                                                 href={project.liveUrl}
-                                                className="inline-flex items-center gap-1.5 text-sm text-indigo-400 hover:text-indigo-300 font-medium transition-colors ml-auto"
+                                                className="inline-flex items-center gap-1.5 text-sm text-[#F15A59] hover:text-[#f27a79] font-medium transition-colors ml-auto"
                                             >
                                                 <span>Live Demo</span>
                                                 <ExternalLink className="w-4 h-4" />
@@ -105,7 +105,7 @@ export default function Projects({ projects }: ProjectsProps) {
                                                 href={project.liveUrl}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
-                                                className="inline-flex items-center gap-1.5 text-sm text-indigo-400 hover:text-indigo-300 font-medium transition-colors ml-auto"
+                                                className="inline-flex items-center gap-1.5 text-sm text-[#F15A59] hover:text-[#f27a79] font-medium transition-colors ml-auto"
                                             >
                                                 <span>Live Demo</span>
                                                 <ExternalLink className="w-4 h-4" />

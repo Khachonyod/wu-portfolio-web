@@ -32,20 +32,20 @@ export default function Experience({ experiences }: ExperienceProps) {
                     {experiences.map((exp) => (
                         <div key={exp.id} className="relative group">
                             {/* Timeline Dot */}
-                            <div className="absolute -left-[31px] sm:-left-[39px] top-1.5 w-4 h-4 rounded-full bg-indigo-600 border-4 border-[#0a0a0f] group-hover:scale-125 transition-transform" />
+                            <div className="absolute -left-[31px] sm:-left-[39px] top-1.5 w-4 h-4 rounded-full bg-[#F15A59] border-4 border-[#0a0a0f] group-hover:scale-125 transition-transform" />
 
-                            <div className="p-6 rounded-2xl bg-white/[0.03] border border-white/10 hover:border-indigo-500/40 transition-all">
+                            <div className="p-6 rounded-2xl bg-white/[0.03] border border-white/10 hover:border-[#c48080] transition-all">
                                 <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
                                     <h3 className="text-xl font-bold text-white">
                                         {exp.position}
                                     </h3>
-                                    <span className="inline-flex items-center gap-1.5 text-xs font-medium text-indigo-400 px-3 py-1 rounded-full bg-indigo-500/10">
+                                    <span className="inline-flex items-center gap-1.5 text-xs font-medium text-[#f5cece] px-3 py-1 rounded-full bg-[#D21312]">
                                         <Calendar className="w-3.5 h-3.5" />
                                         {formatDate(exp.startDate)} – {exp.isCurrent ? 'Present' : exp.endDate ? formatDate(exp.endDate) : ''}
                                     </span>
                                 </div>
 
-                                <p className="text-indigo-300 text-sm font-medium mb-4">
+                                <p className="text-[#f78f8f] text-sm font-medium mb-4">
                                     {exp.company}
                                 </p>
 

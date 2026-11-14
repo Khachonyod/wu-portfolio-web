@@ -25,9 +25,10 @@ export default function ContactForm() {
             await sendContactMessage(formData);
             setStatus('success');
             setFormData({ name: '', email: '', subject: '', message: '' }); // ล้างฟอร์ม
-        } catch (err: any) {
+        } catch (err: unknown) {
             setStatus('error');
-            setErrorMessage(err.message || 'เกิดข้อผิดพลาดในการส่งข้อความ');
+            const msg = err instanceof Error ? err.message : 'เกิดข้อผิดพลาดในการส่งข้อความ';
+            setErrorMessage(msg);
         }
     };
 
@@ -35,19 +36,16 @@ export default function ContactForm() {
 
     return (
         <section ref={ref} id="contact" className="reveal py-20 px-4 sm:px-6 lg:px-8 border-t border-white/5 relative">
-            {/* Background Glow */}
-            <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-purple-600/10 blur-[130px] rounded-full pointer-events-none" />
-
-            <div className="max-w-3xl mx-auto relative z-10">
+            <div className="max-w-2xl mx-auto relative z-10">
                 {/* Section Header */}
-                <div className="text-center mb-12">
+                <div className="text-center mb-10">
                     <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
                         Get In Touch
                     </h2>
                 </div>
 
-                {/* Form Card */}
-                <div className="p-8 sm:p-10 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-sm">
+                {/* Form Card (Centered) */}
+                <div className="p-8 sm:p-10 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-sm shadow-xl">
                     {status === 'success' && (
                         <div className="mb-6 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center gap-3 text-emerald-400">
                             <CheckCircle2 className="w-5 h-5 flex-shrink-0" />
@@ -134,7 +132,7 @@ export default function ContactForm() {
                         <button
                             type="submit"
                             disabled={status === 'loading'}
-                            className="w-full py-3.5 px-6 rounded-xl bg-indigo-600 hover:bg-indigo-500 disabled:bg-indigo-600/50 text-white font-medium flex items-center justify-center gap-2 shadow-lg shadow-indigo-600/30 transition-all hover:scale-[1.01] active:scale-[0.99]"
+                            className="w-full py-3.5 px-6 rounded-xl bg-[#D21312] hover:bg-[#F15A59] disabled:bg-indigo-600/50 text-white font-medium flex items-center justify-center gap-2 transition-all hover:scale-[1.01] active:scale-[0.99]"
                         >
                             {status === 'loading' ? (
                                 <>
