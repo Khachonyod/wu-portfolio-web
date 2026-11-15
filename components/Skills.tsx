@@ -38,17 +38,17 @@ export default function Skills({ skills }: SkillsProps) {
                     {categories.map((category) => (
                         <div
                             key={category}
-                            className="p-6 rounded-2xl bg-white/[0.03] border border-white/10 hover:border-[#D21312] transition-all hover:bg-white/[0.05]"
+                            className="p-6 rounded-2xl bg-white/[0.03] border border-white/10 hover:border-[#AB978C]/40 transition-all hover:bg-white/[0.05]"
                         >
                             <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-                                <span className="w-2 h-2 rounded-full bg-[#F15A59]" />
+                                <span className="w-2 h-2 rounded-full bg-[#AB978C]" />
                                 {category}
                             </h3>
                             <div className="flex flex-wrap gap-2">
                                 {groupedSkills[category].map((skill) => (
                                     <span
                                         key={skill.id}
-                                        className="px-3.5 py-1.5 rounded-lg bg-white/5 border border-white/10 text-sm text-gray-300 font-medium hover:text-white hover:border-indigo-400/50 transition-colors"
+                                        className="px-3.5 py-1.5 rounded-lg bg-white/5 border border-white/10 text-sm text-gray-300 font-medium hover:text-white hover:border-[#6B7C98]/50 transition-colors"
                                     >
                                         {skill.name}
                                     </span>

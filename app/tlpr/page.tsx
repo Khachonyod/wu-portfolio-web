@@ -110,7 +110,7 @@ export default function TLPRDemoPage() {
     };
 
     return (
-        <div className="min-h-screen bg-[#0a0a0f] text-gray-100 selection:bg-indigo-500 selection:text-white">
+        <div className="min-h-screen bg-[#0a0a0f] text-gray-100 selection:bg-[#AB978C] selection:text-white">
             {/* Top Navigation */}
             <header className="border-b border-white/10 bg-[#0a0a0f]/80 backdrop-blur-md sticky top-0 z-40">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
@@ -154,7 +154,7 @@ export default function TLPRDemoPage() {
                     <div className="lg:col-span-5 space-y-6">
                         <div className="p-6 rounded-2xl bg-white/[0.03] border border-white/10 space-y-5">
                             <h2 className="text-lg font-bold text-white flex items-center gap-2">
-                                <Car className="w-5 h-5 text-indigo-400" />
+                                <Car className="w-5 h-5 text-[#AB978C]" />
                                 <span>Upload your image</span>
                             </h2>
 
@@ -164,8 +164,8 @@ export default function TLPRDemoPage() {
                                 onDrop={handleDrop}
                                 onClick={() => fileInputRef.current?.click()}
                                 className={`border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition-all ${selectedImage
-                                    ? 'border-indigo-500/80 bg-indigo-500/5'
-                                    : 'border-white/15 hover:border-indigo-500/50 bg-black/20'
+                                    ? 'border-[#AB978C]/80 bg-[#AB978C]/5'
+                                    : 'border-white/15 hover:border-[#AB978C]/50 bg-black/20'
                                     }`}
                             >
                                 <input
@@ -175,7 +175,7 @@ export default function TLPRDemoPage() {
                                     onChange={handleFileChange}
                                     className="hidden"
                                 />
-                                <div className="w-12 h-12 rounded-full bg-indigo-500/10 text-indigo-400 flex items-center justify-center mx-auto mb-3">
+                                <div className="w-12 h-12 rounded-full bg-[#AB978C]/10 text-[#AB978C] flex items-center justify-center mx-auto mb-3">
                                     <Upload className="w-6 h-6" />
                                 </div>
                                 <p className="text-sm font-medium text-white mb-1">
@@ -188,7 +188,7 @@ export default function TLPRDemoPage() {
                             <button
                                 onClick={runRecognition}
                                 disabled={isLoading || !selectedImage}
-                                className="w-full py-3.5 px-6 rounded-xl font-semibold text-sm text-white bg-indigo-600 hover:bg-indigo-500 active:scale-[0.99] disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-indigo-600/25 transition-all flex items-center justify-center gap-2"
+                                className="w-full py-3.5 px-6 rounded-xl font-semibold text-sm text-white bg-[#AB978C] hover:bg-[#6B7C98] active:scale-[0.99] disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-[#AB978C]/25 transition-all flex items-center justify-center gap-2"
                             >
                                 {isLoading ? (
                                     <>
@@ -207,7 +207,7 @@ export default function TLPRDemoPage() {
                         {/* Pipeline Highlights Card */}
                         <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/5 space-y-4">
                             <h3 className="text-sm font-semibold text-gray-300 flex items-center gap-2">
-                                <Cpu className="w-4 h-4 text-indigo-400" />
+                                <Cpu className="w-4 h-4 text-[#AB978C]" />
                                 <span>สเปกของโมเดลที่ใช้</span>
                             </h3>
                             <div className="grid grid-cols-2 gap-3 text-xs">
@@ -243,7 +243,7 @@ export default function TLPRDemoPage() {
                                     <button
                                         onClick={() => setActiveTab('annotated')}
                                         className={`px-3 py-1 rounded-md transition-colors ${activeTab === 'annotated'
-                                            ? 'bg-indigo-600 text-white font-medium'
+                                            ? 'bg-[#AB978C] text-white font-medium'
                                             : 'text-gray-400 hover:text-white'
                                             }`}
                                     >
@@ -252,7 +252,7 @@ export default function TLPRDemoPage() {
                                     <button
                                         onClick={() => setActiveTab('original')}
                                         className={`px-3 py-1 rounded-md transition-colors ${activeTab === 'original'
-                                            ? 'bg-indigo-600 text-white font-medium'
+                                            ? 'bg-[#AB978C] text-white font-medium'
                                             : 'text-gray-400 hover:text-white'
                                             }`}
                                     >
@@ -281,7 +281,7 @@ export default function TLPRDemoPage() {
 
                                 {isLoading && (
                                     <div className="absolute inset-0 bg-black/70 backdrop-blur-xs flex flex-col items-center justify-center gap-3">
-                                        <RotateCw className="w-8 h-8 text-indigo-400 animate-spin" />
+                                        <RotateCw className="w-8 h-8 text-[#AB978C] animate-spin" />
                                         <span className="text-sm font-medium text-white">กำลังคำนวณตำแหน่งป้ายทะเบียน...</span>
                                     </div>
                                 )}
@@ -311,7 +311,7 @@ export default function TLPRDemoPage() {
                                     </div>
                                     <div className="flex items-center gap-3 text-xs text-gray-400">
                                         <span className="inline-flex items-center gap-1">
-                                            <Timer className="w-3.5 h-3.5 text-indigo-400" />
+                                            <Timer className="w-3.5 h-3.5 text-[#6B7C98]" />
                                             {result.processing_time_ms} ms
                                         </span>
                                     </div>
@@ -348,7 +348,7 @@ export default function TLPRDemoPage() {
                                             </div>
                                             <div className="p-3 rounded-xl bg-black/40 border border-white/5">
                                                 <span className="text-xs text-gray-400 block mb-0.5">Tilt Angle</span>
-                                                <span className="text-base font-bold text-indigo-300">
+                                                <span className="text-base font-bold text-[#6B7C98]">
                                                     {plate.tilt_angle > 0 ? `+${plate.tilt_angle}°` : `${plate.tilt_angle}°`}
                                                 </span>
                                             </div>
@@ -369,7 +369,7 @@ export default function TLPRDemoPage() {
                                                 {plate.characters.map((char, i) => (
                                                     <span
                                                         key={i}
-                                                        className="w-9 h-9 rounded-lg bg-indigo-600/20 border border-indigo-500/30 text-indigo-200 font-bold text-sm flex items-center justify-center shadow-xs"
+                                                        className="w-9 h-9 rounded-lg bg-[#6B7C98]/20 border border-[#6B7C98]/30 text-[#E9E6E7] font-bold text-sm flex items-center justify-center shadow-xs"
                                                     >
                                                         {char}
                                                     </span>
@@ -397,8 +397,8 @@ export default function TLPRDemoPage() {
                     </h2>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div className="p-6 rounded-2xl bg-white/[0.03] border border-white/10 hover:border-indigo-500/30 transition-all">
-                            <div className="w-10 h-10 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center mb-4">
+                        <div className="p-6 rounded-2xl bg-white/[0.03] border border-white/10 hover:border-[#AB978C]/40 transition-all">
+                            <div className="w-10 h-10 rounded-xl bg-[#AB978C]/10 text-[#AB978C] flex items-center justify-center mb-4">
                                 <Scan className="w-5 h-5" />
                             </div>
                             <h3 className="text-base font-bold text-white mb-2">1. Plate Localization</h3>
@@ -408,8 +408,8 @@ export default function TLPRDemoPage() {
                             </p>
                         </div>
 
-                        <div className="p-6 rounded-2xl bg-white/[0.03] border border-white/10 hover:border-indigo-500/30 transition-all">
-                            <div className="w-10 h-10 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center mb-4">
+                        <div className="p-6 rounded-2xl bg-white/[0.03] border border-white/10 hover:border-[#6B7C98]/40 transition-all">
+                            <div className="w-10 h-10 rounded-xl bg-[#6B7C98]/10 text-[#6B7C98] flex items-center justify-center mb-4">
                                 <Layers className="w-5 h-5" />
                             </div>
                             <h3 className="text-base font-bold text-white mb-2">2. Deskew & Enhancement</h3>
@@ -419,8 +419,8 @@ export default function TLPRDemoPage() {
                             </p>
                         </div>
 
-                        <div className="p-6 rounded-2xl bg-white/[0.03] border border-white/10 hover:border-indigo-500/30 transition-all">
-                            <div className="w-10 h-10 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center mb-4">
+                        <div className="p-6 rounded-2xl bg-white/[0.03] border border-white/10 hover:border-[#AB978C]/40 transition-all">
+                            <div className="w-10 h-10 rounded-xl bg-[#AB978C]/10 text-[#AB978C] flex items-center justify-center mb-4">
                                 <CheckCircle2 className="w-5 h-5" />
                             </div>
                             <h3 className="text-base font-bold text-white mb-2">3. Thai Syntax Validation</h3>

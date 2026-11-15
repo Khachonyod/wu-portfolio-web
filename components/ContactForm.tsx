@@ -74,7 +74,7 @@ export default function ContactForm() {
                                     placeholder="Your name"
                                     value={formData.name}
                                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                    className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-indigo-500 transition-colors"
+                                    className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-[#AB978C] transition-colors"
                                 />
                             </div>
 
@@ -90,7 +90,7 @@ export default function ContactForm() {
                                     placeholder="your@mail.com"
                                     value={formData.email}
                                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                    className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-indigo-500 transition-colors"
+                                    className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-[#AB978C] transition-colors"
                                 />
                             </div>
                         </div>
@@ -107,7 +107,7 @@ export default function ContactForm() {
                                 placeholder="Subject"
                                 value={formData.subject}
                                 onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                                className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-indigo-500 transition-colors"
+                                className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-[#AB978C] transition-colors"
                             />
                         </div>
 
@@ -124,7 +124,7 @@ export default function ContactForm() {
                                 placeholder="How can i help you?"
                                 value={formData.message}
                                 onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                                className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-indigo-500 transition-colors resize-none"
+                                className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-[#AB978C] transition-colors resize-none"
                             />
                         </div>
 
@@ -132,7 +132,7 @@ export default function ContactForm() {
                         <button
                             type="submit"
                             disabled={status === 'loading'}
-                            className="w-full py-3.5 px-6 rounded-xl bg-[#D21312] hover:bg-[#F15A59] disabled:bg-indigo-600/50 text-white font-medium flex items-center justify-center gap-2 transition-all hover:scale-[1.01] active:scale-[0.99]"
+                            className="w-full py-3.5 px-6 rounded-xl bg-[#AB978C] hover:bg-[#6B7C98] disabled:bg-[#7B7F8A]/50 text-white font-medium flex items-center justify-center gap-2 transition-all hover:scale-[1.01] active:scale-[0.99]"
                         >
                             {status === 'loading' ? (
                                 <>

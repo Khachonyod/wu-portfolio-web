@@ -43,7 +43,7 @@ export default function Footer({ email, githubUrl, linkedinUrl, name }: FooterPr
                             target="_blank"
                             rel="noopener noreferrer"
                             aria-label="GitHub Profile"
-                            className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-indigo-500/50 hover:bg-white/10 transition-all"
+                            className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-[#E9E6E7] hover:border-[#AB978C]/50 hover:bg-white/10 transition-all"
                         >
                             <GithubIcon className="w-5 h-5" />
                         </a>
@@ -54,7 +54,7 @@ export default function Footer({ email, githubUrl, linkedinUrl, name }: FooterPr
                             target="_blank"
                             rel="noopener noreferrer"
                             aria-label="LinkedIn Profile"
-                            className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-indigo-500/50 hover:bg-white/10 transition-all"
+                            className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-[#E9E6E7] hover:border-[#AB978C]/50 hover:bg-white/10 transition-all"
                         >
                             <LinkedinIcon className="w-5 h-5" />
                         </a>
@@ -63,7 +63,7 @@ export default function Footer({ email, githubUrl, linkedinUrl, name }: FooterPr
                         <a
                             href={`mailto:${email}`}
                             aria-label="Send Email"
-                            className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-indigo-500/50 hover:bg-white/10 transition-all"
+                            className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-[#E9E6E7] hover:border-[#AB978C]/50 hover:bg-white/10 transition-all"
                         >
                             <Mail className="w-5 h-5" />
                         </a>
